@@ -17,7 +17,7 @@ public class Pregunta {
     private Integer preguntaId;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id", referencedColumnName = "categoira_id")
+    @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id")
     private Categoria categoria;
 
     @Column

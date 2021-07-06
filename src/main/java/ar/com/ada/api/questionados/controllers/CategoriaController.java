@@ -28,12 +28,12 @@ public class CategoriaController {
     }
  
     //GET Categoría por Id
-    @GetMapping("/categoria/{id}")
+    @GetMapping("/categorias/{id}")
     public ResponseEntity<Categoria> traerCategoriaPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(service.buscarCategoria(id));
     }
  
-    @PostMapping(value = "/categoria")
+    @PostMapping("/categorias")
     public ResponseEntity<?> crearCategoria(@RequestBody Categoria categoria) {
         GenericResponse gr = new GenericResponse();
  
