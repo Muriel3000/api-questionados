@@ -2,6 +2,8 @@ package ar.com.ada.api.questionados.entities;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "respuesta")
 public class Respuesta {
@@ -13,11 +15,13 @@ public class Respuesta {
 
     @ManyToOne
     @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")
+    @JsonIgnore  //?? 
     private Pregunta pregunta;
    
     @Column
     private String texto;
 
+    //JsonIgnore -> funciona en get, pero no se puede porque no te deja hacer put desde el front
     @Column(name = "es_correcta")
     private boolean esCorrecta;
 

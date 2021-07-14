@@ -3,6 +3,7 @@ package ar.com.ada.api.questionados.services;
 import java.util.List;
 import java.util.Optional;
 
+import ar.com.ada.api.questionados.dto.CategoriaDTO;
 import ar.com.ada.api.questionados.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,14 +24,6 @@ public class CategoriaService {
 
     // buscarCategoria
 
-    /* public Categoria buscarCategoriaById(Integer categoriaId){
-        Optional<Categoria> resultado = repository.findById(categoriaId);
-        if(resultado.isPresent()){
-            return resultado.get();
-        }
-        return null;
-    } */
-
     public Categoria buscarCategoria(Integer categoriaId) {
 
         Optional<Categoria> resultado = repository.findById(categoriaId);
@@ -40,7 +33,6 @@ public class CategoriaService {
             categoria = resultado.get();
 
         return categoria;
-
     }
 
     public Categoria buscarCategoriaV2(Integer categoriaId) {
@@ -48,14 +40,9 @@ public class CategoriaService {
         Categoria categoria = repository.findById(categoriaId.intValue());
 
         return categoria;
-
     }
 
     // crearCategoria
-
-    /*public void crearCategoria(Categoria categoria){
-        repository.save(categoria);
-    } */
 
     public boolean crearCategoria(Categoria categoria) {
         if (existe(categoria.getNombre()))
@@ -73,6 +60,27 @@ public class CategoriaService {
 
     public boolean existeV2(String nombre) {
         return repository.existsByNombre(nombre);
+    }
+
+    // modificarCategoria
+
+    public void modificarCategoria(Categoria categoria, CategoriaDTO categoriaAModificar){
+        if(categoriaAModificar.nombre != null){
+            categoria.setNombre(categoriaAModificar.nombre); //sin el if significa que debe tener un valor si o si(not null)
+        }
+        if(categoriaAModificar.descripcion != null){
+            categoria.setDescripcion(categoriaAModificar.descripcion);
+        }
+        repository.save(categoria);
+    }
+
+    public boolean eliminarCategoriaSinPreguntas(Categoria categoria) {
+        if(categoria.getPreguntas().isEmpty()){
+            repository.delete(categoria);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

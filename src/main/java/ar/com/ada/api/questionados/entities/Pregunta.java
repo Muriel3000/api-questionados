@@ -15,13 +15,13 @@ public class Pregunta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pregunta_id")
     private Integer preguntaId;
+    
+    @Column
+    private String enunciado; //questionacion
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id")
     private Categoria categoria;
-
-    @Column
-    private String enunciado; //questionacion
 
     @JsonIgnore
     @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

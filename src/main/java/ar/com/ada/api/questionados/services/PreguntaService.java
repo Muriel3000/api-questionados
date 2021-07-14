@@ -6,14 +6,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.com.ada.api.questionados.dto.PreguntaDTO;
+import ar.com.ada.api.questionados.dto.RespuestaDTO;
 import ar.com.ada.api.questionados.entities.*;
 import ar.com.ada.api.questionados.repos.PreguntaRepository;
+import ar.com.ada.api.questionados.repos.RespuestaRepository;
 
 @Service
 public class PreguntaService {
     
     @Autowired
     PreguntaRepository repository;
+
+    @Autowired 
+    RespuestaRepository respuestaRepo;
 
     @Autowired
     CategoriaService categoriaService;
@@ -53,5 +59,27 @@ public class PreguntaService {
         
         repository.save(pregunta);
         return pregunta;
+    }
+
+    // modificarPregunta
+
+    public void modificarPregunta(Pregunta pregunta, PreguntaDTO preguntaDTO){
+        if(preguntaDTO.enunciado != null){
+            pregunta.setEnunciado(preguntaDTO.enunciado);
+        }
+        if(preguntaDTO.categoria.getCategoriaId() != null){
+            Categoria categoria = categoriaService.buscarCategoria(preguntaDTO.categoria.getCategoriaId());
+            pregunta.setCategoria(categoria);
+        }
+        repository.save(pregunta);
+    }     
+
+    // eliminarPreguntaYRespuestas
+
+    public void eliminarPreguntaYRespuestas(Pregunta pregunta){
+        for(Respuesta respuesta : pregunta.getOpciones()){
+            respuestaRepo.delete(respuesta);
+        }
+        repository.delete(pregunta);
     }
 }

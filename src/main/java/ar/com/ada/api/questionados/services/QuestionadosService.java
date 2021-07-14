@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.questionados.entities.Pregunta;
+import ar.com.ada.api.questionados.entities.Respuesta;
 
 @Service
 public class QuestionadosService {
@@ -22,6 +23,18 @@ public class QuestionadosService {
         //return this.hechizos.get(random - 1);
         return todasLasPreguntas.get(random - 1);
 
+    }
+
+    public boolean verificarRespuesta(Integer preguntaId, Integer respuestaId){
+        Pregunta pregunta = preguntaService.buscarPreguntaPorId(preguntaId);
+        for(Respuesta r : pregunta.getOpciones()){
+            if(r.getRepuestaId().equals(respuestaId)){
+               return r.isEsCorrecta();
+                /* if(r.isEsCorrecta()
+                    return true; */
+            }
+        }
+        return false;
     }
     
 }
