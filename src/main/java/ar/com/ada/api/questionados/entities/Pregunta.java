@@ -16,14 +16,13 @@ public class Pregunta {
     @Column(name = "pregunta_id")
     private Integer preguntaId;
     
-    @Column
     private String enunciado; //questionacion
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id")
     private Categoria categoria;
 
-    @JsonIgnore
+    //JsonIgnore
     @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Respuesta> opciones = new ArrayList<>();
 

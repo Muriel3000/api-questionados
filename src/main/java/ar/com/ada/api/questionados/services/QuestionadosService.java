@@ -28,7 +28,7 @@ public class QuestionadosService {
     public boolean verificarRespuesta(Integer preguntaId, Integer respuestaId){
         Pregunta pregunta = preguntaService.buscarPreguntaPorId(preguntaId);
         for(Respuesta r : pregunta.getOpciones()){
-            if(r.getRepuestaId().equals(respuestaId)){
+            if(r.getRespuestaId().equals(respuestaId)){
                return r.isEsCorrecta();
                 /* if(r.isEsCorrecta()
                     return true; */

@@ -74,6 +74,8 @@ public class CategoriaService {
         repository.save(categoria);
     }
 
+    // eliminarCategoria
+    
     public boolean eliminarCategoriaSinPreguntas(Categoria categoria) {
         if(categoria.getPreguntas().isEmpty()){
             repository.delete(categoria);

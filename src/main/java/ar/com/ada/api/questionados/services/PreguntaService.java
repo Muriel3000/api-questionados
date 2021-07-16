@@ -61,7 +61,7 @@ public class PreguntaService {
         return pregunta;
     }
 
-    // modificarPregunta
+    // modificarPreguntaYRespuestas*
 
     public void modificarPregunta(Pregunta pregunta, PreguntaDTO preguntaDTO){
         if(preguntaDTO.enunciado != null){
@@ -74,7 +74,7 @@ public class PreguntaService {
         repository.save(pregunta);
     }     
 
-    // eliminarPreguntaYRespuestas
+    // eliminarPreguntaYRespuestas*
 
     public void eliminarPreguntaYRespuestas(Pregunta pregunta){
         for(Respuesta respuesta : pregunta.getOpciones()){

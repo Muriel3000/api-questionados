@@ -16,14 +16,12 @@ public class Categoria {
     @Column (name = "categoria_id")
     private Integer categoriaId;
 
-    @Column 
     private String nombre;
 
-    @Column 
     private String descripcion;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @JsonIgnore
     private List<Pregunta> preguntas = new ArrayList<>();
 
 

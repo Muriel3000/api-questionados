@@ -11,26 +11,25 @@ public class Respuesta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "respuesta_id")
-    private Integer repuestaId;
+    private Integer respuestaId;
 
     @ManyToOne
     @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")
     @JsonIgnore  //?? 
     private Pregunta pregunta;
    
-    @Column
     private String texto;
 
     //JsonIgnore -> funciona en get, pero no se puede porque no te deja hacer put desde el front
     @Column(name = "es_correcta")
     private boolean esCorrecta;
 
-    public Integer getRepuestaId() {
-        return repuestaId;
+    public Integer getRespuestaId() {
+        return respuestaId;
     }
 
-    public void setRepuestaId(Integer repuestaId) {
-        this.repuestaId = repuestaId;
+    public void setRespuestaId(Integer repuestaId) {
+        this.respuestaId = repuestaId;
     }
 
     public Pregunta getPregunta() {
