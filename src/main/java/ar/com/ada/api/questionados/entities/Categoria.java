@@ -50,7 +50,7 @@ public class Categoria {
         this.categoriaId = categoriaId;
     }
 
-    public void agregarPregunta(Pregunta pregunta) {
+    /*public void agregarPregunta(Pregunta pregunta) {
         this.preguntas.add(pregunta);
-    }
+    }*/
 }
