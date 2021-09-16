@@ -1,6 +1,6 @@
 package ar.com.ada.api.questionados.controllers;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import ar.com.ada.api.questionados.entities.Categoria;
 import ar.com.ada.api.questionados.entities.Pregunta;
 import ar.com.ada.api.questionados.models.request.InfoPreguntaNueva;
 import ar.com.ada.api.questionados.models.response.GenericResponse;
+import ar.com.ada.api.questionados.models.response.PreguntaSinCategoria;
 import ar.com.ada.api.questionados.services.CategoriaService;
 
 @RestController
@@ -48,12 +49,19 @@ public class CategoriaController {
     @PutMapping("/categorias/{id}")
     public ResponseEntity<?> modificarCategoria(@PathVariable Integer id,@RequestBody CategoriaDTO categoriaAModificar){
         Categoria categoria = service.buscarCategoria(id);
-        service.modificarCategoria(categoria, categoriaAModificar);
         GenericResponse gr = new GenericResponse();
-        gr.isOk = true;
-        gr.id = id;
-        gr.message = "El nombre y/o descripción de la categoria fue modificada con exito";
-        return ResponseEntity.ok(gr);
+        if(service.modificarCategoria(categoria, categoriaAModificar)){
+            gr.isOk = true;
+            gr.id = id;
+            gr.message = "El nombre y/o descripción de la categoria fue modificada con exito";
+            return ResponseEntity.ok(gr);
+        } else {
+            gr.id = categoria.getCategoriaId();
+            gr.isOk = false;
+            gr.message = "No se ha encontrado atributo a modificar, revisar json";
+            return ResponseEntity.badRequest().body(gr);
+        }
+        
     }
 
     @DeleteMapping("categorias/{id}")
@@ -74,9 +82,14 @@ public class CategoriaController {
     }
 
     @GetMapping("/categorias/{id}/preguntas") 
-    public ResponseEntity<List<Pregunta>> traerPreguntasDeCategoria(@PathVariable Integer id){
+    public ResponseEntity<List<PreguntaSinCategoria>> traerPreguntasDeCategoria(@PathVariable Integer id){
         Categoria categoria = service.buscarCategoria(id);
-        return ResponseEntity.ok(categoria.getPreguntas());
+        List<PreguntaSinCategoria> preguntas = new ArrayList<>();
+        for(Pregunta p : categoria.getPreguntas()){
+            PreguntaSinCategoria pregunta = PreguntaSinCategoria.convertirDesde(p);
+            preguntas.add(pregunta);
+        }
+        return ResponseEntity.ok(preguntas);
     }
    
 }

@@ -20,7 +20,7 @@ public class Categoria {
 
     private String descripcion;
 
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
     @JsonIgnore
     private List<Pregunta> preguntas = new ArrayList<>();
 
@@ -50,7 +50,8 @@ public class Categoria {
         this.categoriaId = categoriaId;
     }
 
-    /*public void agregarPregunta(Pregunta pregunta) {
+    public void agregarPregunta(Pregunta pregunta) {
         this.preguntas.add(pregunta);
-    }*/
+        pregunta.setCategoria(this);
+    }
 }

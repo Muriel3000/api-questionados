@@ -22,7 +22,7 @@ public class Pregunta {
     @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id")
     private Categoria categoria;
 
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Respuesta> opciones = new ArrayList<>();
 
@@ -40,7 +40,6 @@ public class Pregunta {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-       // this.categoria.agregarPregunta(this);
     }
 
     public String getEnunciado() {
@@ -61,6 +60,7 @@ public class Pregunta {
 
     public void agregarOpcion(Respuesta respuesta) {
         this.opciones.add(respuesta);
+        respuesta.setPregunta(this);
     }
 
 }

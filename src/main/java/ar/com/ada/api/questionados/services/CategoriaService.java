@@ -64,14 +64,26 @@ public class CategoriaService {
 
     // modificarCategoria
 
-    public void modificarCategoria(Categoria categoria, CategoriaDTO categoriaAModificar){
-        if(categoriaAModificar.nombre != null){
-            categoria.setNombre(categoriaAModificar.nombre); //sin el if significa que debe tener un valor si o si(not null)
-        }
+    public boolean modificarCategoria(Categoria categoria, CategoriaDTO categoriaAModificar){
+       if(modificarNombre(categoria, categoriaAModificar) || modificarDescripcion(categoria, categoriaAModificar)){
+           return true;
+        }  return false;
+    }
+
+    public boolean modificarNombre(Categoria categoria, CategoriaDTO categoriaAModificar) {
+        if(categoriaAModificar.nombre != null){    //sin el if significa que debe tener un valor si o si(not null)
+            categoria.setNombre(categoriaAModificar.nombre);
+            repository.save(categoria);
+            return true;
+        }   return false;
+    }
+
+    public boolean modificarDescripcion(Categoria categoria, CategoriaDTO categoriaAModificar){
         if(categoriaAModificar.descripcion != null){
             categoria.setDescripcion(categoriaAModificar.descripcion);
-        }
-        repository.save(categoria);
+            repository.save(categoria);
+            return true;
+        }   return false;
     }
 
     // eliminarCategoria
