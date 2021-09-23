@@ -71,6 +71,15 @@ public class PreguntaService {
             Categoria categoria = categoriaService.buscarCategoria(preguntaDTO.categoria.getCategoriaId());
             pregunta.setCategoria(categoria);
         }
+        for(RespuestaDTO r : preguntaDTO.opciones){
+            for(Respuesta respuesta : pregunta.getOpciones()){
+                if(r.respuestaId == respuesta.getRespuestaId()){
+                    if(r.texto != null){
+                        respuesta.setTexto(r.texto);
+                    }
+                }
+            }       
+        }
         repository.save(pregunta);
     }     
 
